@@ -7,9 +7,10 @@ import java.util.Vector;
  *
  * ************************************/
 
-public class Lab4 extends javax.swing.JFrame implements UpdateChanges {
-    private Mediator mediator;
-    private VStack vStack=new VStack();
+public class Lab4 extends javax.swing.JFrame implements Mediator {
+    private VStack vStack = new VStack();
+    private Invoker invoker = new Invoker(this);
+
     public Lab4() {
         setTitle("Stack Application");
         setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
@@ -33,6 +34,10 @@ public class Lab4 extends javax.swing.JFrame implements UpdateChanges {
         getContentPane().add(JButtonRedo);
         JButtonRedo.setBounds(38, 190, 110, 30);
 
+        JButtonRepeat.setText("Repeat");
+        getContentPane().add(JButtonRepeat);
+        JButtonRepeat.setBounds(38, 230, 110, 30);
+
         JScrollPane scrollPane = new JScrollPane(JList1);
 
         scrollPane.setBounds(218, 38, 160, 200);
@@ -47,8 +52,8 @@ public class Lab4 extends javax.swing.JFrame implements UpdateChanges {
         JButtonPop.addActionListener(lSymAction);
         JButtonUndo.addActionListener(lSymAction);
         JButtonRedo.addActionListener(lSymAction);
-
-        mediator = new Mediator(vStack, new Invoker(), this);
+        JButtonRepeat.addActionListener(lSymAction);
+        updateView();
     }
 
     static public void main(String args[]) {
@@ -76,6 +81,8 @@ public class Lab4 extends javax.swing.JFrame implements UpdateChanges {
     javax.swing.JButton JButtonPop = new javax.swing.JButton();
     javax.swing.JButton JButtonUndo = new javax.swing.JButton();
     javax.swing.JButton JButtonRedo = new javax.swing.JButton();
+
+    javax.swing.JButton JButtonRepeat = new javax.swing.JButton();
     javax.swing.JList JList1 = new javax.swing.JList();
     //
 
@@ -89,9 +96,17 @@ public class Lab4 extends javax.swing.JFrame implements UpdateChanges {
     }
 
     @Override
-    public void notifyList(Vector<String> vector) {
-        JList1.setListData(vector); // refresh the JList
+    public void updateView() {
+        JList1.setListData(vStack.getStackVector()); // refresh the JList
+        JButtonPop.setEnabled(!vStack.isEmpty());
+        JButtonUndo.setEnabled(!invoker.isCommandEmpty());
+        JButtonRedo.setEnabled(!invoker.isRedoEmpty());
         this.repaint();
+    }
+
+
+    public void setTextPush(String command) {
+        invoker.executeCommand(new PushCommand(vStack, command));
     }
 
     class SymWindow extends java.awt.event.WindowAdapter {
@@ -126,26 +141,31 @@ public class Lab4 extends javax.swing.JFrame implements UpdateChanges {
                 JButtonUndo_actionPerformed(event);
             else if (object == JButtonRedo)
                 JButtonRedo_actionPerformed(event);
+            else if (object == JButtonRepeat)
+                JButtonRepeat_actionPerformed(event);
 
         }
     }
 
     void JButtonPush_actionPerformed(java.awt.event.ActionEvent event) {
-        PushDialog dialog = new PushDialog(mediator); //ask the user what to push
+        PushDialog dialog = new PushDialog(this); //ask the user what to push
         dialog.setVisible(true);
 
     }
 
     void JButtonPop_actionPerformed(java.awt.event.ActionEvent event) {
-        mediator.executeCommand(new PopCommand(vStack));
+        invoker.executeCommand(new PopCommand(vStack));
     }
 
     void JButtonUndo_actionPerformed(java.awt.event.ActionEvent event) {
         // to do: code goes here.
-        mediator.undoCommand();
+        invoker.undoCommand();
     }
 
     void JButtonRedo_actionPerformed(java.awt.event.ActionEvent event) {
-        mediator.redoCommand();
+        invoker.redoCommand();
+    }
+    void JButtonRepeat_actionPerformed(java.awt.event.ActionEvent event) {
+        invoker.repeatCommand();
     }
 }

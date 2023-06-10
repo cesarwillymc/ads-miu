@@ -1,5 +1,5 @@
-public interface Container {
-    double computePrice();
+public interface Container<T> {
+    double computePrice(Functor<T>  doSomething);
 
     double netPrice();
 

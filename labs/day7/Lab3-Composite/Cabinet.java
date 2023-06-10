@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Cabinet implements Container {
+public class Cabinet<T> implements Container<T> {
     private Container board;
     private Vector<Container> drivelist = new Vector<>();
 
@@ -28,4 +28,6 @@ public class Cabinet implements Container {
             tmp += drive.computePrice();
         return tmp;
     }
+
+    private void doAll(Functor)
 }

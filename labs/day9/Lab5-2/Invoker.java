@@ -4,10 +4,17 @@ public class Invoker {
     private Stack<Command> commandHistory = new Stack<>();
     private Stack<Command> redoHistory = new Stack<>();
 
+    private Mediator mediator;
+
+    public Invoker(Mediator mediator) {
+        this.mediator = mediator;
+    }
+
     public void executeCommand(Command command) {
         command.execute();
         commandHistory.push(command);
         redoHistory.clear();
+        mediator.updateView();
     }
 
     public void undoCommand() {
@@ -15,9 +22,8 @@ public class Invoker {
             Command lastCommand = commandHistory.pop();
             lastCommand.undo();
             redoHistory.push(lastCommand);
-        } else {
-            System.out.println("Undo Empty");
         }
+        mediator.updateView();
     }
 
     public void redoCommand() {
@@ -25,8 +31,18 @@ public class Invoker {
             Command lastUndoneCommand = redoHistory.pop();
             lastUndoneCommand.execute();
             commandHistory.push(lastUndoneCommand);
-        } else {
-            System.out.println("Redo empty");
         }
+        mediator.updateView();
+    }
+    public void repeatCommand(){
+        if(!commandHistory.isEmpty()){
+            executeCommand(commandHistory.peek());
+        }
+    }
+    public boolean isRedoEmpty(){
+        return redoHistory.isEmpty();
+    }
+    public boolean isCommandEmpty(){
+        return commandHistory.isEmpty();
     }
 }

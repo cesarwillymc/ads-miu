@@ -1,7 +1,6 @@
 package part2;
 
-public class Counter  {
-    public final Observable<Integer> events = new Observable<>();
+public class Counter extends Observable<Integer> {
     private Integer count;
 
     public Counter() {
@@ -10,13 +9,13 @@ public class Counter  {
 
     public void increment() {
         count++;
-        events.notify(count);
+        notify(count);
     }
 
     public void decrement() {
         if (count > 0) {
             count--;
-            events.notify(count);
+            notify(count);
         }
     }
 }

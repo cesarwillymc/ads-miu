@@ -14,9 +14,9 @@ public class CommonView extends JFrame {
         OvalFrame ovalf = new OvalFrame();
         ovalf.setVisible(true);
         ovalf.setBounds(250, 400, 300, 200);
-        counter.events.attach(textf);
-        counter.events.attach(rectf);
-        counter.events.attach(ovalf);
+        counter.attach(textf);
+        counter.attach(rectf);
+        counter.attach(ovalf);
     }
 
 }

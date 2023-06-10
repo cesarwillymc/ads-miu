@@ -20,8 +20,15 @@ public class VStack {
             return null;
     }
 
-    public int getSize() {
-        return stackvector.size();
+    public String peek() {
+        if (stackvector.size() > 0) {
+            return stackvector.firstElement();
+        } else
+            return null;
+    }
+
+    public boolean isEmpty() {
+        return stackvector.isEmpty();
     }
 
     public Vector<String> getStackVector() {
