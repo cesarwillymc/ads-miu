@@ -1,0 +1,23 @@
+1.-What is the problem(s)?
+
+The conexion with the components need to be adding one to one.
+
+2.- Describe some specific impacts of this design issue, examples of why it would lead to a poor
+result.
+
+Break Open/Close principle, because if in the future we want to add other frame listener,
+we need to update the logic in Counter.
+
+The code is so coupling and break the encapsulation
+
+3.- first you should implement the observer/observable pattern your self, and for the
+second use the Java library for these. Note the differences, and any issues in the two approaches.
+
+In my first Code I see a strong relationship between The main Observer and Observable, because the Observer
+keep the instance of the Observable.
+
+In my second Code I see that its better but the problem is the control when you send a lot of data.
+
+In the library code its I see that setChange its required to use.
+
+

@@ -1,0 +1,2 @@
+What issues arise from the new derived ObservableCounter which IsA Counter, and also IsA Observable?
+When I put that has error and no found the observable implementation.
