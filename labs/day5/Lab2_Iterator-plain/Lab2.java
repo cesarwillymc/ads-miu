@@ -167,8 +167,8 @@ public class Lab2 extends javax.swing.JFrame {
     }
 
     private void setTextArea(Iterator<Swimmer> iterator, JTextArea jTextArea) {
-        while (iterator.hasMore()) {
-            var swimmer = iterator.getNext();
+        while (iterator.hasNext()) {
+            var swimmer = iterator.next();
             jTextArea.append(swimmer.getFname() + " " + swimmer.getLname() + " \n");
         }
     }

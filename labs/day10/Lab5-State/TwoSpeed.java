@@ -1,18 +1,31 @@
-public class TwoSpeed implements State {
-    Car car;
+public class TwoSpeed implements Gear {
+    Transmition car;
 
-    public TwoSpeed(Car car) {
+    public TwoSpeed(Transmition car) {
         this.car = car;
     }
 
+
+
     @Override
-    public void checkSpeed() {
-        if (car.getSpeed() > 10) {
-            car.changeState(new ThirdSpeed(car));
-        } else if (car.getSpeed() <= 5) {
-            car.changeState(new OneSpeed(car));
+    public void changeSpeed(int speed) {
+        if (speed > 10) {
+            car.nextGear();
+        } else if (speed <= 5) {
+            car.previousGear();
         }
     }
+
+    @Override
+    public Gear nextGear() {
+        return new ThirdSpeed(car);
+    }
+
+    @Override
+    public Gear previousGear() {
+        return new OneSpeed(car);
+    }
+
     @Override
     public String getShift() {
         return "2";

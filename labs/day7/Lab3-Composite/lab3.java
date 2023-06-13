@@ -3,14 +3,14 @@ public class lab3 {
         Cabinet cab = new Cabinet();
         Board board = new Board();
 
-        Container d1 = new Drive();
-        Container d2 = new Drive();
-        Container d3 = new Drive();
-        Container bus = new Bus();
+        Container<Double,Container> d1 = new Drive();
+        Container<Double,Container> d2 = new Drive();
+        Container<Double,Container> d3 = new Drive();
+        Container<Double,Container> bus = new Bus();
 
-        Container card1 = new Card();
-        Container card2 = new Card();
-        Container card3 = new Card();
+        Container<Double,Container> card1 = new Card();
+        Container<Double,Container> card2 = new Card();
+        Container<Double,Container> card3 = new Card();
 
         cab.setBoard(board);
         cab.addDrive(d1);
@@ -22,6 +22,8 @@ public class lab3 {
         board.addCard(card2);
         board.addCard(card3);
 
-        System.out.println("Total price of computer is: " + cab.computePrice());
+        Functor<Container, Integer> containerSumFunctor =new SumFunctor();
+        cab.doAll(containerSumFunctor);
+        System.out.println("Total price of computer is: " + containerSumFunctor.getValue() );
     }
 }

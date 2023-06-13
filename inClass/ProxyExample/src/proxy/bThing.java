@@ -1,6 +1,8 @@
-public class aThing implements Thing {
+package proxy;
+
+public class bThing implements Thing {
     private String name;
-    public aThing(String name) {
+    public bThing(String name) {
         this.name = name;
     }
 

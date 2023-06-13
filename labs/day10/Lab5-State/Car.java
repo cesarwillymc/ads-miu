@@ -1,26 +1,18 @@
 public class Car {
-    private State currentState;
-    private int speed;
 
-    public void changeState(State speed) {
-        currentState = speed;
-        currentState.checkSpeed();
-    }
-    public void setSpeed(int speed) {
-        this.speed = speed;
-        currentState.checkSpeed();
+    private Transmition transmition;
+
+    public Car(Transmition transmition) {
+        this.transmition = transmition;
     }
 
-    public Car() {
-        this.currentState = new ParkState(this);
+    public void changeSpeed(int speed) {
+        transmition.changeSpeed(speed);
     }
 
-    public State getCurrentState() {
-        return currentState;
+    public Transmition getTransmition() {
+        return transmition;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
 }
     

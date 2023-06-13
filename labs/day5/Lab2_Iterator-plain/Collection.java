@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.function.Predicate;
 
 public interface Collection<T> {

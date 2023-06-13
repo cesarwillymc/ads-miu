@@ -1,3 +1,4 @@
-public interface Functor <T>{
-    void execute(T data);
+public interface Functor <T,O>{
+    T compute(T element);
+    O getValue();
 }

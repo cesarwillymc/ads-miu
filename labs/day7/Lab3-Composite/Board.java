@@ -1,31 +1,34 @@
 import java.util.*;
 
-public class Board implements Container {
-    private Container bus;
+public class Board implements Container<Double,Container> {
+    private Container<Double,Container> bus;
     private Vector<Container> cardlist = new Vector<>();
 
-    public void setBus(Container b) {
+    public void setBus(Container<Double,Container> b) {
         bus = b;
     }
 
-    public void addCard(Container d) {
+    public void addCard(Container<Double,Container> d) {
         cardlist.addElement(d);
     }
 
-    public double netPrice() {
+    @Override
+    public void doAll(Functor doSomething) {
+        doSomething.compute(this);
+        if (bus!=null)
+             bus.doAll(doSomething);
+        for (var a: cardlist){
+            a.doAll(doSomething);
+        }
+    }
+
+    public Double netPrice() {
         return 26.00;
     }
 
-    public double discountPrice() {
+    public Double discountPrice() {
         return 6.00;
     }
 
-    public double computePrice() {
-        double tmp = discountPrice();
-        if (bus != null)
-            tmp += bus.computePrice();
-        for (Container card : cardlist)
-            tmp += card.computePrice();
-        return tmp;
-    }
+
 }

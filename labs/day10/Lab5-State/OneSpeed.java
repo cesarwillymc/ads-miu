@@ -1,17 +1,28 @@
-public class OneSpeed implements State {
-    Car car;
+public class OneSpeed implements Gear {
+    Transmition car;
 
-    public OneSpeed(Car car) {
+    public OneSpeed(Transmition car) {
         this.car = car;
     }
 
+
     @Override
-    public void checkSpeed() {
-        if (car.getSpeed() > 5) {
-            car.changeState(new TwoSpeed(car));
-        } else if (car.getSpeed() <= 0) {
-            car.changeState(new ParkState(car));
+    public void changeSpeed(int speed) {
+        if (speed> 5) {
+            car.nextGear();
+        } else if (speed <= 0) {
+            car.previousGear();
         }
+    }
+
+    @Override
+    public Gear nextGear() {
+        return new TwoSpeed(car);
+    }
+
+    @Override
+    public Gear previousGear() {
+        return new ParkState(car);
     }
 
     @Override

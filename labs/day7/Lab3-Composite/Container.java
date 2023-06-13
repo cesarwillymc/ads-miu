@@ -1,7 +1,7 @@
-public interface Container<T> {
-    double computePrice(Functor<T>  doSomething);
+public interface Container<T,A> {
+    void doAll(Functor  doSomething);
 
-    double netPrice();
+    T netPrice();
 
-    double discountPrice();
+    T discountPrice();
 }

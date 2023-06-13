@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.function.Predicate;
 
 public class SwimmerPredicateIterator implements Iterator<Swimmer> {
@@ -9,18 +10,19 @@ public class SwimmerPredicateIterator implements Iterator<Swimmer> {
         this.swimmerPredicate = swimmerPredicate;
     }
 
+
     @Override
-    public Swimmer getNext() {
+    public boolean hasNext() {
+        return currentPosition < swimmersList.getVector().size();
+    }
+
+    @Override
+    public Swimmer next() {
         Swimmer current;
         do {
             current =swimmersList.getVector().get(currentPosition);
             currentPosition++;
-        }while (hasMore()&& !swimmerPredicate.test(current));
+        }while (hasNext()&& !swimmerPredicate.test(current));
         return current;
-    }
-
-    @Override
-    public Boolean hasMore() {
-        return currentPosition < swimmersList.getVector().size();
     }
 }

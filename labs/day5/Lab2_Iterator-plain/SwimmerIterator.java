@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public class SwimmerIterator implements Iterator<Swimmer> {
     private final SwimmersList swimmersList;
     private int currentPosition;
@@ -13,10 +15,17 @@ public class SwimmerIterator implements Iterator<Swimmer> {
         }
     }
 
+    @Override
+    public boolean hasNext() {
+        if (isReverse) {
+            return currentPosition >= 0;
+        }
+        return currentPosition < swimmersList.getVector().size();
+    }
 
     @Override
-    public Swimmer getNext() {
-        if (hasMore()) {
+    public Swimmer next() {
+        if (hasNext()) {
             var current = swimmersList.getVector().get(currentPosition);
             if (isReverse){
                 currentPosition--;
@@ -26,13 +35,5 @@ public class SwimmerIterator implements Iterator<Swimmer> {
             return current;
         }
         throw new IllegalArgumentException("Dont have more items");
-    }
-
-    @Override
-    public Boolean hasMore() {
-        if (isReverse) {
-            return currentPosition >= 0;
-        }
-        return currentPosition < swimmersList.getVector().size();
     }
 }

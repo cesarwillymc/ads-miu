@@ -1,33 +1,37 @@
 import java.util.*;
 
-public class Cabinet<T> implements Container<T> {
-    private Container board;
+public class Cabinet implements Container<Double,Container> {
+    private Container<Double,Container> board;
     private Vector<Container> drivelist = new Vector<>();
 
-    public void setBoard(Container b) {
+    public void setBoard(Container<Double,Container> b) {
         board = b;
     }
 
-    public void addDrive(Container d) {
+    public void addDrive(Container<Double,Container> d) {
         drivelist.addElement(d);
     }
 
-    public double netPrice() {
+
+    @Override
+    public void doAll(Functor doSomething) {
+        doSomething.compute(this);
+        if (board!=null)
+          board.doAll(doSomething);
+        for (var a : drivelist){
+            a.doAll(doSomething);
+        }
+    }
+
+    public Double netPrice() {
         return 6.00;
     }
 
-    public double discountPrice() {
+    public Double discountPrice() {
         return 3.00;
     }
 
-    public double computePrice() {
-        double tmp = netPrice();
-        if (board != null)
-            tmp += board.computePrice();
-        for (Container drive : drivelist)
-            tmp += drive.computePrice();
-        return tmp;
-    }
 
-    private void doAll(Functor)
+
+
 }

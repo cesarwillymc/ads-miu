@@ -1,3 +1,5 @@
+package proxy;
+
 public class LogProxy implements Thing {
     private Thing realSubject;
     public LogProxy(Thing t) {
